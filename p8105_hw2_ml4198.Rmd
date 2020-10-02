@@ -63,7 +63,9 @@ precipitation_data =
   left_join(precipitation_data, month_df, by = "month")
 ```
 
+The mr_trashwheel dataset includes 344 observations with key variables date, weight_tons, and volume_cubic_yards. The median number of sports balls in a dumpster in 2017 was `r mr_trashwheel %>% filter(year == 2017) %>%  pull(sports_balls) %>%  median()`.
 
+The precipitation_data dataset includes 24 monthly observations of total monthly precipitation in years 2017 and 2018. The total precipitation in 2018 was `r precipitation_data %>%  filter(year == 2018) %>% pull(total) %>%  sum()`.
 
 
 
