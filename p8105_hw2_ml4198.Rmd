@@ -43,11 +43,28 @@ precipitation_2018 =
   relocate(year)
 ```
 
+Recode months
+
+```{r}
+month_df = 
+  tibble(
+    month = 1:12,
+    month_name = month.name
+  )
+```
+
 Join precipitation sheets
 
 ```{r}
 precipitation_data = 
   full_join(precipitation_2017, precipitation_2018)
+
+precipitation_data =
+  left_join(precipitation_data, month_df, by = "month")
 ```
+
+
+
+
 
 
