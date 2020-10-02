@@ -1,5 +1,6 @@
 ---
 title: "p8105_hw2_ml4198"
+Author: Matt Lawlor
 output: github_document
 ---
 
@@ -80,4 +81,36 @@ nyc_transit_df = read.csv("./NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
 ```
 
 This data frame contains NYC transit lines, station names and locations, routes, entry types and whether they are ADA compliant. Data has been cleaned to include relevant variables as listed above and variable names have been standardized. There are 19 columns and 1868 rows in the data frame.
+
+***Distinct lines***
+
+```{r}
+nyc_transit_df %>%   
+  distinct(station_name, line)
+```
+
+There are 465 distinct stations across all lines.
+
+***ADA compliant stations***
+
+```{r}
+nyc_transit_df %>% 
+  pull(ada) %>% 
+  sum()
+```
+
+There are 468 ADA compliant stations
+
+***Proportion without vending allowing entrance***
+
+```{r}
+nyc_transit_df %>% 
+  filter(vending == "NO") %>% 
+  count(
+    entry, 
+    wt = NULL)
+```
+
+Of entrances/exits without vending, 37.7% allow entry.
+
 
