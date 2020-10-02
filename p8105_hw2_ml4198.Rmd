@@ -3,4 +3,21 @@ title: "p8105_hw2_ml4198"
 output: github_document
 ---
 
+```{r}
+library(tidyverse)
+library(dplyr)
+```
+
 ## Problem 1
+
+```{r}
+mr_trashwheel = 
+  readxl::read_excel("./Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet = 1, range = "A2:N408") %>% 
+  janitor::clean_names() %>% 
+  drop_na(dumpster) %>% 
+  mutate(
+    sports_balls = round(sports_balls),
+    sports_balls = as.integer(sports_balls)
+  )
+```
+
