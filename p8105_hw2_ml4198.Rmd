@@ -6,7 +6,6 @@ output: github_document
 
 ```{r}
 library(tidyverse)
-library(dplyr)
 ```
 
 ## Problem 1
@@ -74,10 +73,12 @@ NYC Transit subway dataset
 
 ```{r}
 nyc_transit_df = read.csv("./NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
-  janitor::clean_names() %>% 
-  select(line:entry, vending, ada) %>% 
-  mutate(entry = recode(entry, "YES" = TRUE, "NO" = FALSE)
-  )
+    janitor::clean_names() %>% 
+    select(line:entry, vending, ada) %>% 
+    mutate(entry = recode(entry, "YES" = TRUE, "NO" = FALSE)) %>% 
+    mutate_at(vars(route1:route11), replace_na, "None") %>% 
+    mutate_at(vars(route8:route11), as.character()
+    )
 ```
 
 This data frame contains NYC transit lines, station names and locations, routes, entry types and whether they are ADA compliant. Data has been cleaned to include relevant variables as listed above and variable names have been standardized. There are 19 columns and 1868 rows in the data frame.
@@ -113,4 +114,24 @@ nyc_transit_df %>%
 
 Of entrances/exits without vending, 37.7% allow entry.
 
+***Pivot_longer routes***
 
+```{r}
+tidy_nyc_transit_df = 
+  pivot_longer(
+    nyc_transit_df,
+    route1:route11,
+    names_to = "route_number",
+    values_to = "route_name"
+  )
+```
+
+***Distinct stations servng A train***
+
+```{r}
+tidy_nyc_transit_df %>%
+  filter(route_name == "A") %>% 
+  distinct(station_name)
+```
+
+56 stations serve the A train.
