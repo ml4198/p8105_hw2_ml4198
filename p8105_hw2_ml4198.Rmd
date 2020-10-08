@@ -135,3 +135,24 @@ tidy_nyc_transit_df %>%
 ```
 
 56 stations serve the A train.
+
+## Problem 3
+
+```{r}
+pols_df = read.csv("./pols-month.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(
+    col = mon,
+    into = c("year", "mon", "day"),
+    convert = TRUE %>% 
+    type.convert()) %>% 
+  rename(president = prez_gop) %>%
+  select (-prez_dem, -day) %>% 
+  mutate(
+    mon = recode(mon, `1`="Jan", `2`="Feb", `3`="Mar", `4`="Apr", `5`="May", `6`="Jun", `7`="Jul", `8`="Aug", `9`="Sep", `10`="Oct", `11`="Nov", `12`="Dec"),
+    president = recode(president, `1`="R", `0`="D")
+    )
+```
+
+     
+  
