@@ -138,6 +138,8 @@ tidy_nyc_transit_df %>%
 
 ## Problem 3
 
+***Pols dataframe***
+
 ```{r}
 pols_df = read.csv("./pols-month.csv") %>% 
   janitor::clean_names() %>% 
@@ -148,11 +150,29 @@ pols_df = read.csv("./pols-month.csv") %>%
     type.convert()) %>% 
   rename(president = prez_gop) %>%
   select (-prez_dem, -day) %>% 
+  relocate (year, mon) %>% 
   mutate(
     mon = recode(mon, `1`="Jan", `2`="Feb", `3`="Mar", `4`="Apr", `5`="May", `6`="Jun", `7`="Jul", `8`="Aug", `9`="Sep", `10`="Oct", `11`="Nov", `12`="Dec"),
     president = recode(president, `1`="R", `0`="D")
     )
 ```
 
-     
+***SNP dataframe***
+
+```{r}
+snp_df = read.csv("./snp.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(
+    col = date,
+    into = c("mon", "day", "year"),
+    convert = TRUE %>% 
+    type.convert()) %>% 
+  relocate (year, mon) %>% 
+  mutate(
+    mon = recode(mon, `1`="Jan", `2`="Feb", `3`="Mar", `4`="Apr", `5`="May", `6`="Jun", `7`="Jul", `8`="Aug", `9`="Sep", `10`="Oct", `11`="Nov", `12`="Dec")
+  )
+```
+  
+  
+
   
